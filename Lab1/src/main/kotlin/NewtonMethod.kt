@@ -1,4 +1,3 @@
-import kotlin.math.abs
 import kotlin.math.absoluteValue
 
 class NewtonMethod(
@@ -6,15 +5,15 @@ class NewtonMethod(
     private val e: Float,
     val f: (x: Float) -> Float,
     val derivative: (x: Float) -> Float
-) {
-    fun run(): Float {
+) : Method {
+    override fun run(): Float {
         var x = x0
         var xi = x - f(x) / derivative(x)
         var tmp: Float
         var itNumber = 0
         while ((xi - x).absoluteValue > e) {
             tmp = xi
-            xi -= f(x) / derivative(x)
+            xi = x - f(x) / derivative(x)
             x = tmp
             itNumber++
         }
