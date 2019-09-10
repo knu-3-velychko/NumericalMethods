@@ -10,7 +10,7 @@ class NewtonMethod(
     fun run(): Float {
         var x = x0
         var xi = x - f(x) / derivative(x)
-        var tmp = x0
+        var tmp: Float
         var itNumber = 0
         while ((xi - x).absoluteValue > e) {
             tmp = xi
