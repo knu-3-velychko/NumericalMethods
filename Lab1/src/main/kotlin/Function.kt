@@ -1,7 +1,3 @@
-fun function(x: Float): Float {
-    return x * x
-}
+fun function(x: Float) = x * x * x
 
-fun derivativeFunction(x: Float): Float {
-    return 2 * x
-}
+fun derivativeFunction(x: Float)= 3 * x*x
