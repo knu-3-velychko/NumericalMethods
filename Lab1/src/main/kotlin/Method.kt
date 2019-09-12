@@ -1,3 +1,3 @@
 interface Method {
-    fun run(): Float
+    fun run(): Double
 }

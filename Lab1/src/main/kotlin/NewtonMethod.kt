@@ -1,20 +1,18 @@
 import kotlin.math.absoluteValue
 
 class NewtonMethod(
-    var x0: Float,
-    private val e: Float,
-    val f: (x: Float) -> Float,
-    val derivative: (x: Float) -> Float
+    var x0: Double,
+    private val e: Double,
+    val f: (x: Double) -> Double,
+    val derivative: (x: Double) -> Double
 ) : Method {
-    override fun run(): Float {
+    override fun run(): Double {
         var x = x0
         var xi = x - f(x) / derivative(x)
-        var tmp: Float
         var itNumber = 0
         while ((xi - x).absoluteValue > e) {
-            tmp = xi
+            x = xi
             xi = x - f(x) / derivative(x)
-            x = tmp
             itNumber++
         }
         println("Number of iterations $itNumber")
