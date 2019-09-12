@@ -6,7 +6,7 @@ class NewtonMethod(
     val f: (x: Double) -> Double,
     val derivative: (x: Double) -> Double
 ) : Method {
-    override fun run(): Double {
+    override fun calculate(): Double? {
         var x = x0
         var xi = x - f(x) / derivative(x)
         var itNumber = 0

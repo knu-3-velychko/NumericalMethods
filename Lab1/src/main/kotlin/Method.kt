@@ -1,3 +1,3 @@
 interface Method {
-    fun run(): Double
+    fun calculate(): Double?
 }

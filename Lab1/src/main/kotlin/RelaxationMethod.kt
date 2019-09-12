@@ -8,7 +8,7 @@ class RelaxationMethod(
     val f: (x: Double) -> Double,
     val derivative: (x: Double) -> Double
 ) : Method {
-    override fun run(): Double {
+    override fun calculate(): Double? {
         val function = (a..b step 0.01).map { derivative(it) }
         val max = function.max() ?: function[0]
         val min = function.min() ?: function[0]
@@ -20,7 +20,7 @@ class RelaxationMethod(
 
         while ((xi - x).absoluteValue > e) {
             x = xi
-            xi = x - c * f(x)* sign(derivative(x))
+            xi = x - c * f(x) * sign(derivative(x))
             itNumber++
         }
         println("Number of iterations $itNumber")
