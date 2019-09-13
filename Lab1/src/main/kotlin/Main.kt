@@ -62,9 +62,21 @@ class Main {
         fun main(args: Array<String>) {
 //            run(-0.9, 1.0, 0.0001, ::function1, ::derivativeFunction1)
 
-          //  run(0.9, 3.0, 0.0001, ::function2, ::derivativeFunction2)
+            run(0.9, 3.0, 0.000000001, ::function2, ::derivativeFunction2)
 
-            run(0.9, 3.0, 0.0001, ::function3, ::derivativeFunction3)
+            //run(0.9, 3.0, 0.0001, ::function3, ::derivativeFunction3)
         }
     }
+}
+
+infix fun ClosedRange<Double>.step(step: Double): Iterable<Double> {
+    require(start.isFinite())
+    require(endInclusive.isFinite())
+    require(step > 0.0) { "Step must be positive, was: $step." }
+    val sequence = generateSequence(start) { previous ->
+        if (previous == Double.POSITIVE_INFINITY) return@generateSequence null
+        val next = previous + step
+        if (next > endInclusive) null else next
+    }
+    return sequence.asIterable()
 }

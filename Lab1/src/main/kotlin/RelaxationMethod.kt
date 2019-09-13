@@ -34,20 +34,9 @@ class RelaxationMethod(
             if (iterations ?: 0 >= MAX_ITERATIONS)
                 return null
         }
-        if (xi.isNaN() || xi == Double.POSITIVE_INFINITY || xi == Double.NEGATIVE_INFINITY)
+        if (xi.isNaN() || xi.isInfinite())
             return null
         return xi
     }
 }
 
-infix fun ClosedRange<Double>.step(step: Double): Iterable<Double> {
-    require(start.isFinite())
-    require(endInclusive.isFinite())
-    require(step > 0.0) { "Step must be positive, was: $step." }
-    val sequence = generateSequence(start) { previous ->
-        if (previous == Double.POSITIVE_INFINITY) return@generateSequence null
-        val next = previous + step
-        if (next > endInclusive) null else next
-    }
-    return sequence.asIterable()
-}
