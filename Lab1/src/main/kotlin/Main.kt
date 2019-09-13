@@ -17,11 +17,18 @@ class Main {
         private fun function2(x: Double) = x * x - 4
         private fun derivativeFunction2(x: Double) = 2 * x
 
+        private fun function3(x: Double) = x * x + 4
+        private fun derivativeFunction3(x: Double) = 2 * x
+
         private fun printResult(name: String, m: Method) {
-            println(colorCyan + name + colorReset + " result: " + colorYellow + (m.result ?: "no result"))
-            println(colorCyan + name + colorReset + " number of iterations: " + colorYellow + m.iterations)
-            println(colorCyan + name + colorReset + " time: " + colorYellow + m.time)
+            println("$colorCyan$name$colorReset result: $colorYellow" + (m.result ?: "no result"))
+            println(
+                "$colorCyan$name$colorReset number of iterations: $colorYellow" + (m.iterations
+                    ?: "not calculated")
+            )
+            println("$colorCyan$name$colorReset time: $colorYellow" + (m.time ?: "not calculated"))
             println()
+
         }
 
         fun run(
@@ -53,12 +60,11 @@ class Main {
 
         @JvmStatic
         fun main(args: Array<String>) {
-//            val a = -0.9
-//            val b = 1.0
-//            val e = 0.0001
 //            run(-0.9, 1.0, 0.0001, ::function1, ::derivativeFunction1)
 
-            run(0.9, 3.0, 0.0001, ::function2, ::derivativeFunction2)
+          //  run(0.9, 3.0, 0.0001, ::function2, ::derivativeFunction2)
+
+            run(0.9, 3.0, 0.0001, ::function3, ::derivativeFunction3)
         }
     }
 }

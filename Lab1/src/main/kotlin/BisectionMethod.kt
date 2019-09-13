@@ -28,8 +28,10 @@ class BisectionMethod(
             c = (a + b) / 2
             if (f(a) * f(c) < 0.0)
                 b = c
-            if (f(c) * f(b) < 0.0)
+            else if (f(c) * f(b) < 0.0)
                 a = c
+            else
+                return null
             if (iterations ?: 0 >= MAX_ITERATIONS)
                 break
         }

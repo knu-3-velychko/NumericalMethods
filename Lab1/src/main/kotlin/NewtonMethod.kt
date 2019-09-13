@@ -29,7 +29,7 @@ class NewtonMethod(
             x = xi
             xi = x - f(x) / derivative(x)
             if (iterations ?: 0 >= MAX_ITERATIONS)
-                break
+                return null
         }
         if(xi.isNaN())
             return null

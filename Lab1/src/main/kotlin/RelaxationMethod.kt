@@ -32,9 +32,9 @@ class RelaxationMethod(
             x = xi
             xi = x - c * f(x)
             if (iterations ?: 0 >= MAX_ITERATIONS)
-                break
+                return null
         }
-        if(xi.isNaN())
+        if (xi.isNaN() || xi == Double.POSITIVE_INFINITY || xi == Double.NEGATIVE_INFINITY)
             return null
         return xi
     }
