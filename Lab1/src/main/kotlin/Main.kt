@@ -7,23 +7,58 @@ import kotlin.system.measureTimeMillis
 class Main {
     companion object {
 
-        private fun function(x: Double) = sin(x)
+        val colorReset = "\u001B[0m"
+        val colorYellow = "\u001B[33m"
+        val colorCyan = "\u001B[36m"
 
-        private fun derivativeFunction(x: Double) = cos(x)
+        private fun function1(x: Double) = sin(x)
+        private fun derivativeFunction1(x: Double) = cos(x)
+
+        private fun function2(x: Double) = x * x - 4
+        private fun derivativeFunction2(x: Double) = 2 * x
+
+        private fun printResult(name: String, m: Method) {
+            println(colorCyan + name + colorReset + " result: " + colorYellow + (m.result ?: "no result"))
+            println(colorCyan + name + colorReset + " number of iterations: " + colorYellow + m.iterations)
+            println(colorCyan + name + colorReset + " time: " + colorYellow + m.time)
+            println()
+        }
+
+        fun run(
+            a: Double,
+            b: Double,
+            e: Double,
+            f: (x: Double) -> Double,
+            derivative: (x: Double) -> Double
+        ) {
+            var max = derivative(0.0)
+            var min = derivative(0.0)
+            for (i in a..b step 0.01) {
+                var tmp = derivative(i)
+                if (max < tmp)
+                    max = tmp
+                if (min < tmp)
+                    min = tmp
+            }
+            val c = 2 / (max + min)
+
+            val bisectionMethod = BisectionMethod(a, b, e, f)
+            val newtonMethod = NewtonMethod((a + b) / 2, e, f, derivative)
+            val relaxationMethod = RelaxationMethod(a, b, c, e, f, derivative)
+
+            printResult("Bisection method", bisectionMethod)
+            printResult("Newton method", newtonMethod)
+            printResult("Relaxation method", relaxationMethod)
+        }
 
         @JvmStatic
         fun main(args: Array<String>) {
-            val a = BisectionMethod(-0.9, 1.0, 0.0001, ::function)
-            val b = NewtonMethod(0.3, 0.0001, ::function, ::derivativeFunction)
-            val c = RelaxationMethod(-0.9, 1.0, 0.0001, ::function, ::derivativeFunction)
+//            val a = -0.9
+//            val b = 1.0
+//            val e = 0.0001
+//            run(-0.9, 1.0, 0.0001, ::function1, ::derivativeFunction1)
 
-            val printResult =
-                { name: String, method: Method -> println("$name method result: ${method.run()}") }
-            println("Bisection method time: ${measureTimeMillis { printResult("Bisection", a) }}")
-            println()
-            println("Newton method time: ${measureTimeMillis { printResult("Newton", b) }}")
-            println()
-            println("Relaxation method time: ${measureTimeMillis { printResult("Relaxation", c) }}")
+            run(0.9, 3.0, 0.0001, ::function2, ::derivativeFunction2)
         }
     }
 }
