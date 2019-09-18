@@ -1,0 +1,3 @@
+class SeidelMethod(matrix: Matrix) {
+
+}
