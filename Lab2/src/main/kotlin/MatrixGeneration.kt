@@ -31,5 +31,7 @@ object MatrixGenerator {
         }
 
     fun getVector(size: Int, matrix: Matrix, root: Array<BigDecimal>) =
-        Array(size){}
+        Array(size) { i ->
+            matrix.matrix[i].fold(BigDecimal.ZERO) { acc, e -> acc + e * root[i] }
+        }
 }
