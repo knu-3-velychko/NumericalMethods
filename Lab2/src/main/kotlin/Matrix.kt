@@ -6,7 +6,7 @@ class Matrix(val matrix: Array<Array<BigDecimal>>) {
             throw IndexOutOfBoundsException("Invalid i coordinate $i")
         if (j >= matrix.size)
             throw IndexOutOfBoundsException("Invalid j coordinate $j")
-        return matrix[i][j];
+        return matrix[i][j]
     }
 
     operator fun set(i: Int, j: Int, value: BigDecimal) {
