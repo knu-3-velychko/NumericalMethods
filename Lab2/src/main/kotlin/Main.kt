@@ -1,4 +1,3 @@
-
 class Main {
     companion object {
         @JvmStatic
@@ -9,6 +8,16 @@ class Main {
             val matrix = MatrixGenerator.getRandomMatrix(4, 30, array)
             val gaussMethod = GaussMethod(matrix, 4)
             for (i in gaussMethod.result) {
+                println(i)
+            }
+
+            val jacobiMethod = JacobiMethod(matrix, Array(4) { 0.0 }, 4, 0.001)
+            for(i in jacobiMethod.result){
+                println(i)
+            }
+
+            val seidelMethod=SeidelMethod(matrix, Array(4){0.0},4,0.001)
+            for(i in seidelMethod.result){
                 println(i)
             }
         }
