@@ -1,51 +1,51 @@
-import java.math.BigDecimal
-import java.util.*
 import kotlin.math.sign
 
 object MatrixGenerator {
-    fun getRandomMatrix(size: Int, range: Int, root: Array<BigDecimal>): Array<Array<BigDecimal>> {
-        val matrix = getRandomArray(size, BigDecimal(2 * range))
+    fun getRandomMatrix(size: Int, range: Int, root: Array<Double>): Array<Array<Double>> {
+        val matrix = getRandomArray(size, (2 * range).toDouble())
 
         return composeMatrix(size, matrix, getVector(size, matrix, root))
     }
 
-    fun getDiagonallyDominantMatrix(size: Int, range: Int, root: Array<BigDecimal>): Array<Array<BigDecimal>> {
-        val max = BigDecimal(2 * range)
+    fun getDiagonallyDominantMatrix(size: Int, range: Int, root: Array<Double>): Array<Array<Double>> {
+        val max = (2 * range).toDouble()
         val matrix = getRandomArray(size, max)
         for (i in 0 until size - 1) {
-            val randFromDouble = BigDecimal(Math.random())
-            matrix[i][i] = matrix[i].fold(BigDecimal.ZERO) { acc, e -> acc + e.abs() }
-            matrix[i][i] = randFromDouble.multiply(max) - max / BigDecimal(2)
-            matrix[i][i] *= BigDecimal((-2..1).random().sign)
+            val randFromDouble = Math.random()
+            matrix[i][i] = matrix[i].sum()
+            matrix[i][i] = randFromDouble % max - max / 2
+            matrix[i][i] = matrix[i][i] * (-2..1).random().sign
         }
         return composeMatrix(size, matrix, getVector(size, matrix, root))
     }
 
-    fun getHilbertMatrix(size: Int, root: Array<BigDecimal>): Array<Array<BigDecimal>> {
+    fun getHilbertMatrix(size: Int, root: Array<Double>): Array<Array<Double>> {
         val matrix = Array(size) { i ->
-            Array(size + 1) { j -> BigDecimal(1 / (i + j + 1)) }
+            Array(size + 1) { j -> (1 / (i + j + 1)).toDouble() }
         }
         return composeMatrix(size, matrix, getVector(size, matrix, root))
     }
 
-    private fun getRandomArray(size: Int, max: BigDecimal) =
+    private fun getRandomArray(size: Int, max: Double) =
         Array(size) {
             Array(size + 1) {
-                val randFromDouble = BigDecimal(Math.random())
-                randFromDouble.multiply(max) - max / BigDecimal(2)
+                val randFromDouble = (Math.random()).toDouble()
+                randFromDouble % max - max / 2
             }
         }
 
-    private fun getVector(size: Int, matrix: Array<Array<BigDecimal>>, root: Array<BigDecimal>) =
+    fun getVector(size: Int, matrix: Array<Array<Double>>, root: Array<Double>) =
         Array(size) { i ->
-            matrix[i].fold(BigDecimal.ZERO) { acc, e -> acc + e * root[i] }
+            matrix[i].foldIndexed(0.0) { index, acc, d ->acc+
+                if(index!=size) d * root[index] else 0.0
+            }
         }
 
     private fun composeMatrix(
         size: Int,
-        matrix: Array<Array<BigDecimal>>,
-        vector: Array<BigDecimal>
-    ): Array<Array<BigDecimal>> {
+        matrix: Array<Array<Double>>,
+        vector: Array<Double>
+    ): Array<Array<Double>> {
         for (i in 0 until size) {
             matrix[i][size] = vector[i]
         }

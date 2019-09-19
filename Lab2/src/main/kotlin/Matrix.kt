@@ -1,7 +1,7 @@
-import java.math.BigDecimal
 
-class Matrix(val matrix: Array<Array<BigDecimal>>) {
-    operator fun get(i: Int, j: Int): BigDecimal {
+
+class Matrix(val matrix: Array<Array<Double>>) {
+    operator fun get(i: Int, j: Int): Double {
         if (i >= matrix.size)
             throw IndexOutOfBoundsException("Invalid i coordinate $i")
         if (j >= matrix.size)
@@ -9,7 +9,7 @@ class Matrix(val matrix: Array<Array<BigDecimal>>) {
         return matrix[i][j]
     }
 
-    operator fun set(i: Int, j: Int, value: BigDecimal) {
+    operator fun set(i: Int, j: Int, value: Double) {
         if (i >= matrix.size)
             throw IndexOutOfBoundsException("Invalid i coordinate $i")
         if (j >= matrix.size)
