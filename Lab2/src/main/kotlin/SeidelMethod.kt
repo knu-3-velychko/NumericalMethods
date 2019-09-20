@@ -1,11 +1,13 @@
 import kotlin.math.sqrt
 
-class SeidelMethod(val matrix: Array<Array<Double>>, var x: Array<Double>, val size: Int, val e: Double) {
-    val result: Array<Double> by lazy {
+class SeidelMethod(val matrix: Array<Array<Double>>, var x: Array<Double>, val size: Int, val e: Double) : Method {
+    override val result: Array<Double> by lazy {
         var norm = e * e * 10
+        iterations = 0
 
         var p = Array(size) { 0.0 }
         while (sqrt(norm) > e) {
+            iterations = iterations?.inc()
             for (i in 0 until size) {
                 p[i] = x[i]
             }
@@ -23,5 +25,7 @@ class SeidelMethod(val matrix: Array<Array<Double>>, var x: Array<Double>, val s
         }
         x
     }
+
+    override var iterations: Int? = null
 
 }
