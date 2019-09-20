@@ -21,7 +21,7 @@ object MatrixGenerator {
 
     fun getHilbertMatrix(size: Int, root: Array<Double>): Array<Array<Double>> {
         val matrix = Array(size) { i ->
-            Array(size + 1) { j -> (1 / (i + j + 1)).toDouble() }
+            Array(size + 1) { j -> (1.0 / ((i + j).toDouble() + 1.0)) }
         }
         return composeMatrix(size, matrix, getVector(size, matrix, root))
     }
@@ -36,8 +36,9 @@ object MatrixGenerator {
 
     fun getVector(size: Int, matrix: Array<Array<Double>>, root: Array<Double>) =
         Array(size) { i ->
-            matrix[i].foldIndexed(0.0) { index, acc, d ->acc+
-                if(index!=size) d * root[index] else 0.0
+            matrix[i].foldIndexed(0.0) { index, acc, d ->
+                acc +
+                        if (index != size) d * root[index] else 0.0
             }
         }
 

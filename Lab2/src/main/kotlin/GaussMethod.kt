@@ -1,18 +1,18 @@
 import kotlin.math.absoluteValue
 
-class GaussMethod(val matrix: Array<Array<Double>>, val size: Int) {
-    val result: Array<Double> by lazy {
+class GaussMethod(val matrix: Array<Array<Double>>, val size: Int) : Method {
+    override val result: Array<Double> by lazy {
         val x = Array(size) { 0.0 }
-//        for (i in 0 until size) {
-//            for (k in i + 1 until size) {
-//                if (matrix[i][i].absoluteValue <= matrix[k][i].absoluteValue)
-//                    for (j in 0..size) {
-//                        val tmp = matrix[i][j]
-//                        matrix[i][j] = matrix[k][j]
-//                        matrix[k][j] = tmp
-//                    }
-//            }
-//        }
+        for (i in 0 until size) {
+            for (k in i + 1 until size) {
+                if (matrix[i][i].absoluteValue <= matrix[k][i].absoluteValue)
+                    for (j in 0..size) {
+                        val tmp = matrix[i][j]
+                        matrix[i][j] = matrix[k][j]
+                        matrix[k][j] = tmp
+                    }
+            }
+        }
 
         for (i in 0 until size - 1) {
             for (k in i + 1 until size) {
@@ -25,10 +25,12 @@ class GaussMethod(val matrix: Array<Array<Double>>, val size: Int) {
             x[i] = matrix[i][size]
             for (j in i + 1 until size) {
                 if (j != i)
-                    x[i] -=  matrix[i][j] * x[j]
+                    x[i] -= matrix[i][j] * x[j]
             }
             x[i] /= matrix[i][i]
         }
         x
     }
+
+    override var iterations: Int? = 0
 }
