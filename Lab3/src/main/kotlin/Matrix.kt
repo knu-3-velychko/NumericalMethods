@@ -26,18 +26,19 @@ class Matrix {
                 size = j
                 matrix = Array(size) { Array(size) { 0.0 } }
             } else {
-                for (i in 1 until list.size) this[i, j] = 1.0
+                for (i in 1 until list.size) this[list[i].toInt(), j] = 1.0
             }
         }
         complete()
     }
 
     private fun complete() {
-        var sum = 0.0
+        var sum: Double
         for (j in 0 until size) {
+            sum = 0.0
             for (i in 0 until size)
                 sum += this[i, j]
-            if (sum > 0.0)
+            if (sum > 1.0)
                 for (i in 0 until size)
                     this[i, j] /= sum
         }

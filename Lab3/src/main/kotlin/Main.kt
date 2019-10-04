@@ -4,8 +4,9 @@ class Main {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            val file = File("1.txt")
-            file.createNewFile()
+            val result = PageRank("1.txt", 0.0001).result
+            for (i in result)
+                println(i)
             println("Million hugs <3")
         }
     }
