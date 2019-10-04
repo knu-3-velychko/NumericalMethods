@@ -38,7 +38,7 @@ class PageRank(val fName: String, val e: Double) {
 
     private fun norm(v1: Array<Double>, v2: Array<Double>): Double {
         var norm = 0.0
-        for (i in 0 until size)
+        for (i in v1.indices)
             norm += (v1[i] - v2[i]) * (v1[i] - v2[i])
         return norm
     }
