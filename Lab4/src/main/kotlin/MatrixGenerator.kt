@@ -1,9 +1,9 @@
 import kotlin.math.sign
 
 object MatrixGenerator {
-    fun getRandomMatrix(size: Int, range: Int) = getRandomArray(size, (2 * range).toDouble())
+    fun getRandomMatrix(size: Int, range: Int) = Matrix(getRandomArray(size, (2 * range).toDouble()))
 
-    fun getDiagonallyDominantMatrix(size: Int, range: Int): Array<Array<Double>> {
+    fun getDiagonallyDominantMatrix(size: Int, range: Int): Matrix {
         val max = (2 * range).toDouble()
         val matrix = getRandomArray(size, max)
         for (i in 0 until size - 1) {
@@ -12,12 +12,12 @@ object MatrixGenerator {
             matrix[i][i] = randFromDouble % max - max / 2
             matrix[i][i] = matrix[i][i] * (-2..1).random().sign
         }
-        return matrix
+        return Matrix(matrix)
     }
 
-    fun getHilbertMatrix(size: Int) = Array(size) { i ->
+    fun getHilbertMatrix(size: Int) = Matrix(Array(size) { i ->
         Array(size + 1) { j -> (1.0 / ((i + j).toDouble() + 1.0)) }
-    }
+    })
 
 
     private fun getRandomArray(size: Int, max: Double) =
@@ -28,7 +28,7 @@ object MatrixGenerator {
             }
         }
 
-    fun getVector(size: Int, matrix: Array<Array<Double>>, root: Array<Double>) =
+    fun getVector(size: Int, matrix: Matrix, root: Array<Double>) =
         Array(size) { i ->
             matrix[i].foldIndexed(0.0) { index, acc, d ->
                 acc +

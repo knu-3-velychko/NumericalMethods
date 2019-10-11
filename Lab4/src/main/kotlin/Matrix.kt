@@ -12,16 +12,9 @@ class Matrix {
         this.matrix = matrix
     }
 
-    private fun complete() {
-        var sum: Double
-        for (j in 0 until size) {
-            sum = 0.0
-            for (i in 0 until size)
-                sum += this[i, j]
-            if (sum > 1.0)
-                for (i in 0 until size)
-                    this[i, j] /= sum
-        }
+    operator fun get(i: Int): Array<Double> {
+        checkBoundaries(i)
+        return matrix[i]
     }
 
     operator fun get(i: Int, j: Int): Double {
@@ -35,8 +28,8 @@ class Matrix {
         matrix[i][j] = value
     }
 
-    private fun checkBoundaries(i: Int, j: Int) {
-        if (i > size || j > size)
+    private fun checkBoundaries(i: Int, j: Int = -1) {
+        if (i >= size || j >= size)
             throw IndexOutOfBoundsException(
                 "Unable to get value at indexes $i and $j"
             )
