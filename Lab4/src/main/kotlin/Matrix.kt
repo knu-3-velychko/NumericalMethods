@@ -70,6 +70,10 @@ class Matrix {
         return result
     }
 
+//    fun adjoint(matrix: Array<Array<Double>>): Array<Array<Double>> {
+//
+//    }
+
 }
 
 operator fun Double.times(matrix: Matrix) = matrix * this

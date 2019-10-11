@@ -1,5 +1,3 @@
-import kotlin.math.absoluteValue
-
 class LUFactorization(val matrix: Array<Array<Double>>, private var b: Array<Double>, val size: Int, val e: Double) :
     Method {
     override val result: Array<Double> by lazy {
