@@ -93,8 +93,24 @@ class Matrix {
 
         for (i in 0 until size) {
             for (j in 0 until size) {
-                if (j > i)
-                    result[i, i] = this[i, j]
+                if (i > j)
+                    result[i, j] = this[i, j]
+            }
+        }
+        return result
+    }
+
+    fun getLowerTriangleInvert(): Matrix {
+        val matrix = this.getLowerTriangle() + this.getDiagonal()
+        val result = Matrix(size)
+
+        for (i in 0 until size) {
+            result[i, i] = 1.0 / this[i][i]
+            for (j in 0 until i) {
+                var s = 0.0
+                for (k in j until i)
+                    s += matrix[i, k] * result[k, j]
+                result[i, j] = -s * result[i, i]
             }
         }
         return result
@@ -106,7 +122,7 @@ class Matrix {
 
         for (i in 0 until size) {
             for (j in 0 until size) {
-                if (j < i)
+                if (i < j)
                     result[i, i] = this[i, j]
             }
         }

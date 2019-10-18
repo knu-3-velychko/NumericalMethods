@@ -17,11 +17,11 @@ class Main {
             println()
         }
 
-        fun printMarix(matrix: Array<Array<Double>>) {
+        fun printMarix(matrix: Matrix) {
             println(colorReset + "Matrix: " + colorYellow)
-            for (i in matrix) {
-                for (j in i)
-                    print("$j ")
+            for (i in 0 until matrix.size) {
+                for (j in 0 until matrix.size)
+                    print("${matrix[i, j]} ")
                 println()
             }
             println()
@@ -29,20 +29,36 @@ class Main {
 
         @JvmStatic
         fun main(args: Array<String>) {
-            val size = 4
+            val size = 3
             println("I luv ya very much, my sweetheart <3")
             val root = Array(size) { i -> (i + 1).toDouble() }
 
             //val matrix = MatrixGenerator.getRandomMatrix(size, 30)
             val matrix = MatrixGenerator.getDiagonallyDominantMatrix(size, 100)
+            printMarix(matrix)
             //val matrix = MatrixGenerator.getHilbertMatrix(size)
             val vector = MatrixGenerator.getVector(size, matrix, root)
 
-//            val method = LUFactorization(matrix, vector, size, 0.00001)
-//            printResult("LU Decomposition", method, root)
+            val gaussMethod = LUFactorization(matrix, vector, size, 0.0000000001)
+            printResult("LU Decomposition", gaussMethod, root)
+            var gaussNorm = 0.0
+            for (i in 0 until size)
+                gaussNorm += (root[i] - gaussMethod.result[i]) * (root[i] - gaussMethod.result[i])
+            println("$colorReset Norm: $colorYellow$gaussNorm")
 
-            val method = JacobiMethod(matrix, vector, Array(size) { 1.0 }, size, 0.00001)
-            printResult("Jacobi Method", method, root)
+            val jacobiMethod = JacobiMethod(matrix, vector, Array(size) { 1.0 }, size, 0.0000000001)
+            printResult("Jacobi Method", jacobiMethod, root)
+            var jacobiNorm = 0.0
+            for (i in 0 until size)
+                jacobiNorm += (root[i] - jacobiMethod.result[i]) * (root[i] - jacobiMethod.result[i])
+            println("$colorReset Norm: $colorYellow$jacobiNorm")
+
+            val seidelMethod = SeidelMethod(matrix, vector, Array(size) { 0.0 }, size, 0.0000000001)
+            printResult("Seidel Method", seidelMethod, root)
+            var seidelNorm = 0.0
+            for (i in 0 until size)
+                seidelNorm += (root[i] - seidelMethod.result[i]) * (root[i] - seidelMethod.result[i])
+            println("$colorReset Norm: $colorYellow$seidelNorm")
 
         }
     }

@@ -1,8 +1,8 @@
 class LUFactorization(val matrix: Matrix, private var b: Array<Double>, val size: Int, val e: Double) :
     Method {
     override val result: Array<Double> by lazy {
-        var u = Matrix(size)
-        var l = Matrix(size)
+        val u = Matrix(size)
+        val l = Matrix(size)
 
         var sum: Double
         for (i in 0 until size) {
@@ -18,7 +18,7 @@ class LUFactorization(val matrix: Matrix, private var b: Array<Double>, val size
                 sum = 0.0
                 for (k in 0 until i)
                     sum += l[i, k] * l[k, j]
-                l[j, i] = (1.0 / l[i, i]) * (matrix[j, i] - sum)
+                l[j, i] = (1.0 / u[i, i]) * (matrix[j, i] - sum)
             }
         }
 
