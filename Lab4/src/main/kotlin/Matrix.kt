@@ -47,7 +47,7 @@ class Matrix {
         return result
     }
 
-    operator fun times(matrix: Matrix) {
+    operator fun times(matrix: Matrix): Matrix {
         val result = Matrix(size)
         for (i in 0 until size) {
             for (j in 0 until size) {
@@ -56,6 +56,7 @@ class Matrix {
                 }
             }
         }
+        return result
     }
 
     operator fun minus(matrix: Matrix): Matrix {
@@ -103,11 +104,13 @@ class Matrix {
         return result
     }
 
-//    fun adjoint(matrix: Array<Array<Double>>): Array<Array<Double>> {
-//
-//    }
-
 }
 
 operator fun Double.times(matrix: Matrix) = matrix * this
 
+operator fun Array<Double>.plus(vector: Array<Double>): Array<Double> {
+    val result = Array(vector.size) { 0.0 }
+    for (i in vector.indices)
+        result[i] = this[i] + vector[i]
+    return result
+}

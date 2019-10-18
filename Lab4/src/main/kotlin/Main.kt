@@ -31,16 +31,18 @@ class Main {
         fun main(args: Array<String>) {
             val size = 4
             println("I luv ya very much, my sweetheart <3")
-            val root = Array(4) { i -> (i + 1).toDouble() }
+            val root = Array(size) { i -> (i + 1).toDouble() }
 
-            //val matrix = MatrixGenerator.getRandomMatrix(4, 30, array)
-            //val matrix = MatrixGenerator.getDiagonallyDominantMatrix(4, 30, array)
-            val matrix = MatrixGenerator.getHilbertMatrix(size)
+            //val matrix = MatrixGenerator.getRandomMatrix(size, 30)
+            val matrix = MatrixGenerator.getDiagonallyDominantMatrix(size, 100)
+            //val matrix = MatrixGenerator.getHilbertMatrix(size)
             val vector = MatrixGenerator.getVector(size, matrix, root)
 
-            val method = LUFactorization(matrix, vector, size, 0.00001)
+//            val method = LUFactorization(matrix, vector, size, 0.00001)
+//            printResult("LU Decomposition", method, root)
 
-            printResult("LU Decomposition", method, root)
+            val method = JacobiMethod(matrix, vector, Array(size) { 1.0 }, size, 0.00001)
+            printResult("Jacobi Method", method, root)
 
         }
     }

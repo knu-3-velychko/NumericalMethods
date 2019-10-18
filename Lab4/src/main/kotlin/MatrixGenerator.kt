@@ -1,3 +1,4 @@
+import kotlin.math.absoluteValue
 import kotlin.math.sign
 
 object MatrixGenerator {
@@ -6,11 +7,15 @@ object MatrixGenerator {
     fun getDiagonallyDominantMatrix(size: Int, range: Int): Matrix {
         val max = (2 * range).toDouble()
         val matrix = getRandomArray(size, max)
-        for (i in 0 until size - 1) {
+        for (i in 0 until size) {
             val randFromDouble = Math.random()
-            matrix[i][i] = matrix[i].sum()
-            matrix[i][i] = randFromDouble % max - max / 2
-            matrix[i][i] = matrix[i][i] * (-2..1).random().sign
+            var sum = 0.0
+            for (j in matrix[i])
+                sum += j.absoluteValue
+            matrix[i][i] = sum
+            matrix[i][i] += randFromDouble % (max / 2)
+            matrix[i][i] = matrix[i][i] *
+                    if ((-2..1).random() >= 0) 1 else -1
         }
         return Matrix(matrix)
     }
@@ -23,7 +28,7 @@ object MatrixGenerator {
     private fun getRandomArray(size: Int, max: Double) =
         Array(size) {
             Array(size + 1) {
-                val randFromDouble = (Math.random()).toDouble()
+                val randFromDouble = (Math.random())
                 randFromDouble % max - max / 2
             }
         }
