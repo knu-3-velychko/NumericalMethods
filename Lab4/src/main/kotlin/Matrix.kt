@@ -47,6 +47,46 @@ class Matrix {
         return result
     }
 
+    operator fun times(matrix: Matrix) {
+        val result = Matrix(size)
+        for (i in 0 until size) {
+            for (j in 0 until size) {
+                for (k in 0 until size) {
+                    result[i, j] += this[i, k] * matrix[k, j]
+                }
+            }
+        }
+    }
+
+    operator fun minus(matrix: Matrix): Matrix {
+        val result = Matrix(size)
+        for (i in 0 until size) {
+            for (j in 0 until size) {
+                result[i, j] = this[i, j] - matrix[i, j]
+            }
+        }
+        return result
+    }
+
+
+    fun getDiagonal(): Matrix {
+        val result = Matrix(size)
+        for (i in 0 until size) {
+            result[i, i] = this[i, i]
+        }
+        return result
+    }
+
+    fun getDiagonalInvert(): Matrix {
+        val result = Matrix(size)
+
+        for (i in 0 until size) {
+            if (this[i, i] != 0.0)
+                result[i, i] = 1.0 / this[i, i]
+        }
+        return result
+    }
+
     operator fun times(value: Double): Matrix {
         val result = Matrix(size)
         for (i in 0 until size)

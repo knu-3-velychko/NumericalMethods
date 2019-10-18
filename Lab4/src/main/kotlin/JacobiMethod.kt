@@ -1,5 +1,5 @@
 class JacobiMethod(
-    val matrix: Array<Array<Double>>,
+    val matrix: Matrix,
     private var b: Array<Double>,
     private var x: Array<Double>,
     val size: Int,
@@ -7,8 +7,12 @@ class JacobiMethod(
 ) :
     Method {
     override val result: Array<Double> by lazy {
-        val MInv = Array(size) { Array(size) { 0.0 } }
-        val N: Array<Array<Double>>
+        val M = matrix.getDiagonal()
+        val N = (-1.0 * (matrix - matrix.getDiagonal()))
+
+        do {
+
+        } while (true)
 
 
         b
