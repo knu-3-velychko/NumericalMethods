@@ -88,6 +88,31 @@ class Matrix {
         return result
     }
 
+    fun getLowerTriangle(): Matrix {
+        val result = Matrix(size)
+
+        for (i in 0 until size) {
+            for (j in 0 until size) {
+                if (j > i)
+                    result[i, i] = this[i, j]
+            }
+        }
+        return result
+    }
+
+
+    fun getUpperTriangle(): Matrix {
+        val result = Matrix(size)
+
+        for (i in 0 until size) {
+            for (j in 0 until size) {
+                if (j < i)
+                    result[i, i] = this[i, j]
+            }
+        }
+        return result
+    }
+
     operator fun times(value: Double): Matrix {
         val result = Matrix(size)
         for (i in 0 until size)
