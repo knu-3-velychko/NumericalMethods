@@ -1,3 +1,6 @@
+import kotlin.math.absoluteValue
+import kotlin.math.sqrt
+
 class Matrix {
     var size: Int = 0
     private var matrix: Array<Array<Double>> = arrayOf()
@@ -93,14 +96,27 @@ class Matrix {
         return result
     }
 
-    fun getRotationMatrix(i: Int): Matrix {
-        val result = Matrix(this.size)
-        val r = 0.0
-        val s = 0.0
-        val c = 0.0
+    fun getRotationMatrix(i: Int, j: Int, e: Double): Matrix {
+        val result = getIdentityMatrix(size)
+        val theta = (this[i, i] - this[j, j]) / (2 * this[i, j])
+        var t = if (theta < e)
+            1.0 / (theta.absoluteValue + sqrt(theta * theta + 1.0))
+        else
+            1.0 / (2.0 * theta).absoluteValue
+        t = t.absoluteValue
+        val c = 1.0 / sqrt(t * t + 1.0)
+        val s = c * t
+
+        result[i, i] = c
+        result[j, j] = c
+
+        result[i, j] = s
+        result[j, i] = -s
+
         return result
     }
 }
+
 
 operator fun Double.times(matrix: Matrix) = matrix * this
 
@@ -109,4 +125,11 @@ operator fun Array<Double>.plus(vector: Array<Double>): Array<Double> {
     for (i in vector.indices)
         result[i] = this[i] + vector[i]
     return result
+}
+
+fun getIdentityMatrix(size: Int): Matrix {
+    val matrix = Matrix(size)
+    for (i in 0 until size)
+        matrix[i, i] = 1.0
+    return matrix
 }
