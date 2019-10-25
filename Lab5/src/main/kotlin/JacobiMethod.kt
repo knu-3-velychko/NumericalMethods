@@ -10,16 +10,22 @@ class JacobiMethod(val matrix: Matrix, val e: Double) {
 
         eigenVectors = getIdentityMatrix(size)
 
-        while (getNorm(S) > e) {
+        while (true) {
             M = Matrix(S)
             for (i in 0 until size)
                 M[i, i] = 0.0
-            val (i, j) = findMax(M)
+            var (i, j) = findMax(M)
             if (i == j)
                 break
+
+            if (S[i, j].absoluteValue < e)
+                break
+
             val J = S.getRotationMatrix(i, j, e)
-            S = J * S * J.transpose()
+            S = J.transpose() * S * J
+
             eigenVectors = eigenVectors!! * J
+
         }
 
         for (i in 0 until size)

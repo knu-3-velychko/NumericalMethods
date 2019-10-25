@@ -106,13 +106,14 @@ class Matrix {
 
     fun getRotationMatrix(i: Int, j: Int, e: Double): Matrix {
         val result = getIdentityMatrix(size)
-        val theta = (this[i, i] - this[j, j]) / (2 * this[i, j])
+        val theta = (this[j, j] - this[i, i]) / (2.0 * this[i, j])
         val t = if (theta > e)
             -theta + sqrt(theta * theta + 1.0)
         else
             -theta - sqrt(theta * theta + 1.0)
         val c = 1.0 / sqrt(t * t + 1.0)
-        val s = c * t
+        val s = t / sqrt(t * t + 1.0)
+
 
         result[i, i] = c
         result[j, j] = c

@@ -40,11 +40,20 @@ class Main {
             //val matrix = MatrixGenerator.getDiagonallyDominantMatrix(size, 100)
             //val matrix = MatrixGenerator.getHilbertMatrix(size)
 
-            val matrix = MatrixGenerator.getSymmetricMatrix(size, 30)
+            //val matrix = MatrixGenerator.getSymmetricMatrix(size, 30)
+
+            val matrix = Matrix(
+                arrayOf(
+                    arrayOf(4.0, -30.0, 60.0, -35.0),
+                    arrayOf(-30.0, 300.0, -675.0, 420.0),
+                    arrayOf(60.0, -675.0, 1620.0, -1050.0),
+                    arrayOf(-35.0, 420.0, -1050.0, 700.0)
+                )
+            )
 
             printMarix(matrix)
 
-            val result = JacobiMethod(matrix, 0.001)
+            val result = JacobiMethod(matrix, 0.00001)
             printResult(result, root)
         }
     }
