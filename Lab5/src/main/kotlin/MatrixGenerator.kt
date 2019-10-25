@@ -30,7 +30,7 @@ object MatrixGenerator {
             Array(size) { 0.0 }
         }
         for (i in 0 until size)
-            for (j in 0 until i) {
+            for (j in 0..i) {
                 val randFromDouble = (Math.random())
                 result[i][j] = randFromDouble % max - max / 2
                 result[j][i] = result[i][j]

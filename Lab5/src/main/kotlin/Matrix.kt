@@ -10,6 +10,14 @@ class Matrix {
         matrix = Array(size) { Array(size) { 0.0 } }
     }
 
+    constructor(matrix: Matrix) {
+        this.size = matrix.size
+        this.matrix = Array(size) { Array(size) { 0.0 } }
+        for (i in 0 until size)
+            for (j in 0 until size)
+                this.matrix[i][j] = matrix[i, j]
+    }
+
     constructor(matrix: Array<Array<Double>>) {
         this.size = matrix.size
         this.matrix = matrix
@@ -99,11 +107,10 @@ class Matrix {
     fun getRotationMatrix(i: Int, j: Int, e: Double): Matrix {
         val result = getIdentityMatrix(size)
         val theta = (this[i, i] - this[j, j]) / (2 * this[i, j])
-        var t = if (theta < e)
-            1.0 / (theta.absoluteValue + sqrt(theta * theta + 1.0))
+        val t = if (theta > e)
+            -theta + sqrt(theta * theta + 1.0)
         else
-            1.0 / (2.0 * theta).absoluteValue
-        t = t.absoluteValue
+            -theta - sqrt(theta * theta + 1.0)
         val c = 1.0 / sqrt(t * t + 1.0)
         val s = c * t
 

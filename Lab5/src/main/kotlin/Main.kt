@@ -1,3 +1,5 @@
+import kotlin.time.measureTimedValue
+
 class Main {
     companion object {
         private const val colorReset = "\u001B[0m"
@@ -6,6 +8,16 @@ class Main {
 
         private fun printResult(method: JacobiMethod, expected: Array<Double>) {
             println("$colorCyan Jacobi algorithm for eigenvalues$colorReset result: $colorYellow")
+
+            val size = method.eigenValues.size
+            for (i in 0 until size) {
+                println("$colorCyan Eigenvalue e${i + 1} = $colorYellow ${method.eigenValues[i]}")
+                println("$colorCyan Eigenvector v${i + 1} = $colorYellow ")
+                for (j in 0 until size)
+                    println(method.eigenVectors?.get(j, i))
+                print(colorReset)
+
+            }
 
         }
 
@@ -31,7 +43,9 @@ class Main {
             val matrix = MatrixGenerator.getSymmetricMatrix(size, 30)
 
             printMarix(matrix)
-            
+
+            val result = JacobiMethod(matrix, 0.001)
+            printResult(result, root)
         }
     }
 }
