@@ -25,6 +25,18 @@ class Vector2D(val x: Double, val y: Double) {
         return array[index]
     }
 
+    operator fun set(index: Int, value: Double) {
+        array[index] = value
+    }
+
+    operator fun times(value: Double): Vector2D {
+        var result = Vector2D(0.0, 0.0)
+        for (i in 0 until result.size) {
+            result[i] = this[i] * value
+        }
+        return result
+    }
+
 }
 
 fun dot(vector1: Vector2D, vector2: Vector2D): Double {
@@ -32,4 +44,8 @@ fun dot(vector1: Vector2D, vector2: Vector2D): Double {
     for (i in 0 until vector1.size)
         result += vector1[i] * vector2[i]
     return result
+}
+
+operator fun Double.times(vector: Vector2D): Vector2D {
+    return vector * this
 }
