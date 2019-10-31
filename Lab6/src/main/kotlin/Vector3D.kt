@@ -1,10 +1,28 @@
-class Vector2D(val x: Double, val y: Double) {
+class Vector2D {
     val size = 2
-    private val array = DoubleArray(size)
+    var x: Double
+        get() {
+            return array[0]
+        }
+        set(value) {
+            array[0] = value
+        }
+    var y: Double
+        get() {
+            return array[1]
+        }
+        set(value) {
+            array[1] = value
+        }
+    private var array = DoubleArray(size)
 
-    init {
+    constructor(x: Double, y: Double) {
         array[0] = x
         array[1] = y
+    }
+
+    constructor(array: DoubleArray) {
+        this.array = array.clone()
     }
 
     operator fun plus(vector: Vector2D): Vector2D {
@@ -29,14 +47,7 @@ class Vector2D(val x: Double, val y: Double) {
         array[index] = value
     }
 
-    operator fun times(value: Double): Vector2D {
-        var result = Vector2D(0.0, 0.0)
-        for (i in 0 until result.size) {
-            result[i] = this[i] * value
-        }
-        return result
-    }
-
+    operator fun times(value: Double): Vector2D = Vector2D(this.x * value, this.y * value)
 }
 
 fun dot(vector1: Vector2D, vector2: Vector2D): Double {
