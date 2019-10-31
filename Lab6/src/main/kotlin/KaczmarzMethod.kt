@@ -14,7 +14,7 @@ class KaczmarzMethod(
     val sw: SwingWrapper<XYChart>,
     private val chart: XYChart
 ) {
-    val max = 100
+    private val max = 100
 
     fun getIntersection(): Vector2D? {
         var prevX: Vector2D
@@ -23,6 +23,9 @@ class KaczmarzMethod(
         var a: Vector2D
         var b: Vector2D
         chart.addSeries("chart", doubleArrayOf(p[0]), doubleArrayOf(p[1]), null)
+
+        val resultsX = mutableListOf(p.x)
+        val resultsY = mutableListOf(p.y)
 
         do {
             prevX = x
@@ -38,6 +41,8 @@ class KaczmarzMethod(
             val ax = x - a
 
             x = a + (dot(ax, ab) / dot(ab, ab)) * (ab)
+            resultsX.add(x.x)
+            resultsY.add(x.y)
             println(x.x)
             println(x.y)
             println()
@@ -45,7 +50,7 @@ class KaczmarzMethod(
             Thread.sleep(1000)
 
             javax.swing.SwingUtilities.invokeLater {
-                chart.updateXYSeries("chart", doubleArrayOf(x[0]), doubleArrayOf(x[1]), null)
+                chart.updateXYSeries("chart", resultsX, resultsY, null)
                 sw.repaintChart()
             }
             i++

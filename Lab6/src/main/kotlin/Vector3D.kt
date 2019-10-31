@@ -26,15 +26,19 @@ class Vector2D {
     }
 
     operator fun plus(vector: Vector2D): Vector2D {
-        val x1 = this.x + vector.x
-        val y1 = this.y + vector.y
-        return Vector2D(x1, y1)
+        val array = DoubleArray(size)
+        for (i in 0 until size) {
+            array[i] = this[i] + vector[i]
+        }
+        return Vector2D(array)
     }
 
     operator fun minus(vector: Vector2D): Vector2D {
-        val x1 = this.x - vector.x
-        val y1 = this.y - vector.y
-        return Vector2D(x1, y1)
+        val array = DoubleArray(size)
+        for (i in 0 until size) {
+            array[i] = this[i] - vector[i]
+        }
+        return Vector2D(array)
     }
 
     operator fun get(index: Int): Double {

@@ -1,17 +1,21 @@
-import javafx.scene.chart.XYChart
-import org.knowm.xchart.BitmapEncoder.BitmapFormat
-import org.knowm.xchart.BitmapEncoder
 import org.knowm.xchart.SwingWrapper
-import org.knowm.xchart.QuickChart
-import org.knowm.xchart.internal.chartpart.ChartPart
 import org.knowm.xchart.XYChartBuilder
 
 
 class Main {
     companion object {
+        private const val colorReset = "\u001B[0m"
+        private const val colorYellow = "\u001B[33m"
+        private const val colorCyan = "\u001B[36m"
+
+        fun printResult(method: KaczmarzMethod){
+            val result=method.getIntersection()
+            println("$colorCyan Kaczmarz Method  $colorReset result: $colorYellow ")
+            println("( ${result?.x} ${result?.y} )")
+        }
+
         @JvmStatic
         fun main(args: Array<String>) {
-            var phase = 0.0
 
             println("I luv ya vawy much <3 Vawy not like wavy plasters, like very OwO")
 
@@ -21,7 +25,7 @@ class Main {
             val x2Data = doubleArrayOf(0.0, 2.0)
             val y2Data = doubleArrayOf(0.0, 1.0)
 
-// Create Chart
+            // Create Chart
             val chart =
                 XYChartBuilder().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build()
 
@@ -48,7 +52,7 @@ class Main {
                 0.00001,
                 sw, chart
             )
-            method.getIntersection()
+            printResult(method)
         }
     }
 
