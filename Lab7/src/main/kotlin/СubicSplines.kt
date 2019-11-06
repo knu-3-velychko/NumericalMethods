@@ -1,9 +1,9 @@
-class СubicSplines : Method {
-    override val result: Double? by lazy {
+class СubicSplines(val function: Array<Point>) : Method {
+    override val result: DoubleArray by lazy {
+        val size = function.size
+        val res = DoubleArray(size) { 0.0 }
 
-        null
+        res
     }
 
-    override var iterations: Int? = null
-    override var time: Long? = null
 }
