@@ -43,7 +43,4 @@ class NewtonPolynomial(private val points: Array<Point>) : Method {
         return result
     }
 
-    private fun getProduct() {
-
-    }
 }

@@ -5,13 +5,10 @@ class LagrangePolynomial(private val points: Array<Point>) : Method {
         for (i in points.indices) {
             res += getCoefs(i)
         }
-
-        for (i in doubleArrayOf(1.0, -1.0) * doubleArrayOf(1.0, -2.0, 1.0))
-            println(i)
         res
     }
 
-    fun getCoefs(index: Int): DoubleArray {
+    private fun getCoefs(index: Int): DoubleArray {
         var array = DoubleArray(1) { 1.0 }
         var product = 1.0
         for (i in points.indices) {
@@ -25,11 +22,19 @@ class LagrangePolynomial(private val points: Array<Point>) : Method {
 
 
     operator fun DoubleArray.plus(array: DoubleArray): DoubleArray {
-        val result = DoubleArray(this.size)
-        for (i in this.indices) {
-            result[i] = this[i] + array[i]
+        val size = if (this.size > array.size) this.size else array.size
+        val result = DoubleArray(size) { 0.0 }
+        val size1 = this.size
+        val size2 = array.size
+
+        for (i in 1..size1) {
+            result[size - i] += this[size1 - i]
+        }
+        for (i in 1..size2) {
+            result[size - i] += array[size2 - i]
         }
         return result
     }
+
 
 }

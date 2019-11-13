@@ -6,12 +6,6 @@ class Main {
     companion object {
         private fun printResult(name: String, method: Method, range: Iterable<Double>) {
 
-            println()
-            println()
-            println(f(1.0))
-            println(getPolynomialRoot(1.0, method.result))
-            println()
-            println()
             // Create Chart
 
             val points = fillArray(-3.0..3.0 step 0.001) { x: Double -> f(x) }.toTypedArray()
@@ -35,26 +29,43 @@ class Main {
             sw.displayChart()
         }
 
+        private fun printSplines(name: String, method: CubicSplines, range: Iterable<Double>) {
+            // Create Chart
+
+            val points = fillArray(-3.0..3.0 step 0.001) { x: Double -> f(x) }.toTypedArray()
+            method.printResults(-3.0..3.0 step 0.001, points)
+
+        }
+
 
         private fun f(x: Double) = x * sin(5 * x)
 
         @JvmStatic
         fun main(args: Array<String>) {
-            val range = -3.0..3.0 step 0.2
-            val points = fillArray(range) { x: Double -> f(x) }
+            val range1 = -3.0..3.0 step 0.2
+            val points1 = fillArray(range1) { x: Double -> f(x) }
 
-            val lagrangePolynomial = LagrangePolynomial(points.toTypedArray())
+            val lagrangePolynomial = LagrangePolynomial(points1.toTypedArray())
             printResult(
                 "Lagrange Polynomial Interpolation ",
                 lagrangePolynomial,
-                range
+                range1
             )
+            val range2 = -3.0..3.0 step 0.1
+            val points2 = fillArray(range2) { x: Double -> f(x) }
 
-            val newtonPolynomial = NewtonPolynomial(points.toTypedArray())
+            val newtonPolynomial = NewtonPolynomial(points2.toTypedArray())
             printResult(
                 "Lagrange Polynomial Interpolation ",
                 newtonPolynomial,
-                range
+                range2
+            )
+
+            val cubicSplines = CubicSplines(points2.toTypedArray())
+            printSplines(
+                "Cubic Splines Interpolation ",
+                cubicSplines,
+                range2
             )
             println("It works! ")
         }
@@ -91,18 +102,6 @@ class Main {
             for (i in 0 until pow)
                 res *= x
             return res
-        }
-
-        private infix fun ClosedRange<Double>.step(step: Double): Iterable<Double> {
-            require(start.isFinite())
-            require(endInclusive.isFinite())
-            require(step > 0.0) { "Step must be positive, was: $step." }
-            val sequence = generateSequence(start) { previous ->
-                if (previous == Double.POSITIVE_INFINITY) return@generateSequence null
-                val next = previous + step
-                if (next > endInclusive) null else next
-            }
-            return sequence.asIterable()
         }
     }
 
