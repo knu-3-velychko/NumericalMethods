@@ -10,7 +10,7 @@ class NewtonPolynomial(private val points: Array<Point>) : Method {
         fillDifferenceTable()
 
         for (i in 0 until size) {
-            res += product * differenceTable[i][0] * (1 / factorial)
+            res += product * differenceTable[i][0]* (1 / factorial)
             factorial *= i + 1
             product *= doubleArrayOf(1.0, -points[i].x)
         }
