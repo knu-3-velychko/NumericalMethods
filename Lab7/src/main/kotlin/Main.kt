@@ -12,7 +12,7 @@ class Main {
             val (x1Data, y1Data) = points.split()
             val y2Data = fillArrayPolynomial(range, method.result).toDoubleArray()
             val chart =
-                XYChartBuilder().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build()
+                XYChartBuilder().width(600).height(400).title(name).xAxisTitle("X").yAxisTitle("Y").build()
 
             chart.addSeries(
                 "f1(x)",
@@ -56,7 +56,7 @@ class Main {
 
             val newtonPolynomial = NewtonPolynomial(points2.toTypedArray())
             printResult(
-                "Lagrange Polynomial Interpolation ",
+                "Newton Polynomial Interpolation ",
                 newtonPolynomial,
                 range
             )
@@ -74,7 +74,7 @@ class Main {
             val n = 30
             val roots = ChebyshevPolynomialRoots()
             val points = getPoints(roots.getRoots(n)) { x: Double -> f(x) }
-            val range = -1.0..1.0 step 0.0001
+            val range = -1.0..1.0 step 0.01
 
             val lagrangePolynomial = LagrangePolynomial(points)
             printResult(
@@ -85,7 +85,7 @@ class Main {
 
             val newtonPolynomial = NewtonPolynomial(points)
             printResult(
-                "Lagrange Polynomial Interpolation ",
+                "Newton Polynomial Interpolation ",
                 newtonPolynomial,
                 range
             )

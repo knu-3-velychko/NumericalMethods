@@ -1,32 +1,23 @@
 class NewtonPolynomial(private val points: Array<Point>) : Method {
     private val size = points.size
-    private val differenceTable = Array(size) { Array(size) { 0.0 } }
 
     override val result: DoubleArray by lazy {
         val size = points.size
         var res = DoubleArray(size) { 0.0 }
-        var factorial = 1.0
+        val f = DoubleArray(size) { i -> points[i].y }
         var product = doubleArrayOf(1.0)
-        fillDifferenceTable()
+
+        for (j in 0 until size)
+            for (i in size - 1 downTo j+1)
+                f[i] = (f[i] - f[i - 1]) / (points[i].x - points[i - j - 1].x)
 
         for (i in 0 until size) {
-            res += product * differenceTable[i][0]* (1 / factorial)
-            factorial *= i + 1
+            res += product * f[i]
             product *= doubleArrayOf(1.0, -points[i].x)
         }
         res
     }
 
-    private fun fillDifferenceTable() {
-        for (i in 0 until size) {
-            differenceTable[0][i] = points[i].y
-        }
-        for (i in 1 until size) {
-            for (j in 0 until size - i)
-                differenceTable[i][j] =
-                    (differenceTable[i - 1][j + 1] - differenceTable[i - 1][j]) / (points[j + 1].x - points[j].x)
-        }
-    }
 
     operator fun DoubleArray.plus(array: DoubleArray): DoubleArray {
         val size = if (this.size > array.size) this.size else array.size

@@ -43,7 +43,7 @@ class CubicSplines(val points: Array<Point>) {
         }
 
         val chart =
-            XYChartBuilder().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build()
+            XYChartBuilder().width(600).height(400).title("Cubic Splines").xAxisTitle("X").yAxisTitle("Y").build()
 
 
         val (x1Data, y1Data) = array.split()
